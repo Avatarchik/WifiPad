@@ -36,6 +36,6 @@ VirtualFree(ptr, 0, MEM_RELEASE);
 }
 -- snip --
 
-I thank whomever that forum user who provided that code.
+A patch is included in the atl directory which can be applied to the ATL header code. I thank whomever that forum user who provided that code.
 
 Enjoy!

@@ -1,0 +1,49 @@
+diff -ur atl/atlbase.h atl-msvc-patch/atlbase.h
+--- atl/atlbase.h	2006-03-03 22:19:12.000000000 -0800
++++ atl-patch/atlbase.h	2009-06-13 11:20:48.000000000 -0700
+@@ -284,6 +284,7 @@
+ };
+ #pragma pack(pop)
+ 
++#if 0
+ PVOID __stdcall __AllocStdCallThunk(VOID);
+ VOID  __stdcall __FreeStdCallThunk(PVOID);
+ 
+@@ -291,6 +292,22 @@
+ #define FreeStdCallThunk(p) __FreeStdCallThunk(p)
+ 
+ #pragma comment(lib, "atlthunk.lib")
++#else
++//#define AllocStdCallThunk() HeapAlloc(GetProcessHeap(),0,sizeof(_stdcallthunk))
++//#define FreeStdCallThunk(p) HeapFree(GetProcessHeap(),0,p)
++static inline void* __stdcall AllocStdCallThunk()
++{
++LPVOID mem = VirtualAlloc(0, sizeof(_stdcallthunk), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
++if (!mem) return 0;
++return mem;
++}
++
++static inline void __stdcall FreeStdCallThunk(void* ptr)
++{
++if (!ptr) return;
++VirtualFree(ptr, 0, MEM_RELEASE);
++}
++#endif
+ 
+ #elif defined (_M_AMD64)
+ #pragma pack(push,2)
+diff -ur atl/atlwin.h atl-msvc2008-patch/atlwin.h
+--- atl/atlwin.h	2006-03-03 22:19:14.000000000 -0800
++++ atl-msvc2008-patch/atlwin.h	2009-06-13 11:20:48.000000000 -0700
+@@ -1724,9 +1724,10 @@
+ 
+         BOOL SetChainEntry(DWORD dwChainID, CMessageMap* pObject, DWORD dwMsgMapID = 0)
+         {
++			int i;
+         // first search for an existing entry
+ 
+-                for(int i = 0; i < m_aChainEntry.GetSize(); i++)
++                for(i = 0; i < m_aChainEntry.GetSize(); i++)
+                 {
+                         if(m_aChainEntry[i] != NULL && m_aChainEntry[i]->m_dwChainID == dwChainID)
+                         {
