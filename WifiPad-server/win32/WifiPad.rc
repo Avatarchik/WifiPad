@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <commctrl.h>
 
+
 //
 // Icon resources
 //
@@ -34,7 +35,6 @@ IDR_DIALOG_MENU MENU
 {
     POPUP "&File"
     {
-        MENUITEM "Add/Remove gamepad..", IDM_ADD_REMOVE_GAMEPAD
         MENUITEM "E&xit", IDM_EXIT
     }
     POPUP "&Help"

@@ -74,7 +74,6 @@ namespace WifiPad
 			MESSAGE_HANDLER(WM_MOUSEMOVE,OnMouseMove)
 			MESSAGE_HANDLER(WM_LBUTTONDOWN,OnLButtonDown)
 			MESSAGE_HANDLER(WM_HSCROLL,OnChangeMouseSpeed)
-			COMMAND_ID_HANDLER(IDM_ADD_REMOVE_GAMEPAD,OnAddRemoveGamePad)
 			COMMAND_ID_HANDLER(IDM_ABOUT_WIFIPAD,OnAboutWifiPad)
 			COMMAND_ID_HANDLER(IDM_EXIT,OnExit);
 			COMMAND_ID_HANDLER(IDC_NEW_CONFIGURATION,OnNewConfiguration);
@@ -106,12 +105,6 @@ namespace WifiPad
 		LRESULT OnAboutWifiPad(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled)
 		{
 			::ShellExecute(NULL,"open","http://www.wifipad.com/",NULL,NULL,SW_SHOW);
-			return 0;
-		}
-
-		LRESULT OnAddRemoveGamePad(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled)
-		{
-			::ShellExecute(NULL,"explore",(m_server.GetAppDataPath() + "\\Gamepads").c_str(),NULL,NULL,SW_SHOW);
 			return 0;
 		}
 

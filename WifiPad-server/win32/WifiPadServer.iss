@@ -1,11 +1,6 @@
-; -- Example3.iss --
-; Same as Example1.iss, but creates some registry entries too.
-
-; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-
 [Setup]
 AppName=WifiPad Server
-AppVerName=WifiPad Server 1.0.1.0b1
+AppVerName=WifiPad Server 1.1 beta1
 DefaultDirName={pf}\WifiPad Server
 DefaultGroupName=WifiPad Server
 UninstallDisplayIcon={app}\WifiPadServer.exe
@@ -17,4 +12,8 @@ Source: "..\..\Default.gamepad"; DestDir: "{app}"
 
 [Icons]
 Name: "{group}\WifiPad Server"; Filename: "{app}\WifiPadServer.exe"
+Name: "{commondesktop}\WifiPad Server"; Filename: "{app}\WifiPadServer.exe";
+
+[Tasks]
+Name: desktopicon; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
 
