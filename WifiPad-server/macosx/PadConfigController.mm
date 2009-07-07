@@ -16,6 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with WifiPad.  If not, see <http://www.gnu.org/licenses/>.
  */
+#import <time.h>
 #import "Server.h"
 #import "KeySyms.h"
 #import "OS.h"
@@ -315,19 +316,9 @@ using namespace WifiPad;
 			} catch(const std::runtime_error&) {
 			}
 			
-
-			if(OS::FileExists(server->GetGamePadsPath() + "/" + filebase)) {
-				NSAlert *alert = [[NSAlert alloc] init];
-				[alert setAlertStyle:NSInformationalAlertStyle];
-				[alert addButtonWithTitle:@"No"];
-				[alert addButtonWithTitle:@"Yes"];
-				[alert setMessageText:[NSString stringWithUTF8String:("A gamepad by the same filename as \"" + filebase + "\" already exists. Overwrite?").c_str()]];
-				int code = [alert runModal];
-				[alert release]; 
-				if(code == NSAlertFirstButtonReturn) return;
-			}
-			
-			OS::CopyFile([file UTF8String],server->GetGamePadsPath() + "/" + filebase);
+			char curtime[32];
+			sprintf(curtime,"%ld",(long)time(NULL));
+			OS::CopyFile([file UTF8String],server->GetGamePadsPath() + "/" + curtime + "." + filebase);
 			
 			NSAlert *alert = [[NSAlert alloc] init];
 			[alert setAlertStyle:NSInformationalAlertStyle];
