@@ -7,8 +7,7 @@ SOURCES += main.cpp \
     MainWindow.cpp \
     ../../libWifiPad/SocketDataSource.cpp \
     ../../libWifiPad/Socket.cpp \
-    ../../libWifiPad/Server.cpp \
-    ../../libWifiPad/OS.cpp \
+	../../libWifiPad/Server.cpp \
     ../../libWifiPad/LimitReader.cpp \
     ../../libWifiPad/GamePad.cpp \
     ../../libWifiPad/FileDataSource.cpp \
@@ -22,7 +21,8 @@ SOURCES += main.cpp \
     GamePadView.cpp \
     ButtonConfigDialog.cpp \
     ../../libWifiPad/linux/KeySyms.cpp \
-    NewConfigurationDialog.cpp
+    NewConfigurationDialog.cpp \
+    ../../libWifiPad/linux/OS.cpp
 HEADERS += MainWindow.h \
     ../../libWifiPad/Uuid.h \
     ../../libWifiPad/Thread.h \
@@ -52,5 +52,5 @@ HEADERS += MainWindow.h \
 FORMS += MainWindow.ui \
     ButtonConfigDialog.ui \
     NewConfigurationDialog.ui
-INCLUDEPATH = .;../../libs;../../libWifiPad
-LIBS = -lXtst
+INCLUDEPATH = .;../../libs;../../libWifiPad;../../libWifiPad/linux
+LIBS = -lXtst -luuid

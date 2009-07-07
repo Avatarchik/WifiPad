@@ -40,7 +40,8 @@ void GamePadView::paintEvent ( QPaintEvent * event )
             // blit tap zone
             if(showTapZones || m_selectedButton == i)
             {
-                painter.fillRect(rect,QColor(0,0,255,128));
+				if(button.isTrackPad) painter.fillRect(rect,QColor(255,0,0,128));
+				else painter.fillRect(rect,QColor(0,0,255,128));
             }
 
             // blit keynames

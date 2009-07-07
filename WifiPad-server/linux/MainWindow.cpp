@@ -177,14 +177,10 @@ void MainWindow::InstallGamepad()
             }
 
             std::string baseFilename = (fileinfo.baseName() + "." + fileinfo.suffix()).toStdString();
-            if(OS::FileExists(m_server.GetGamePadsPath() + "/" + baseFilename)) {
-                int code = QMessageBox::question(this,"Confirm",("A gamepad by the same filename as \"" + baseFilename + "\" already exists. Overwrite?").c_str(),QMessageBox::Yes | QMessageBox::No);
-                if(code == QMessageBox::No) {
-                    return;
-                }
-            }
+			char curtime[32];
+			sprintf(curtime,"%d",(int)time(NULL));
 
-            OS::CopyFile(filename.toStdString(),m_server.GetGamePadsPath() + "/" + baseFilename);
+			OS::CopyFile(filename.toStdString(),m_server.GetGamePadsPath() + "/" + curtime + "." + baseFilename);
 
             QMessageBox::information(this,"","Gamepad installed.");
 

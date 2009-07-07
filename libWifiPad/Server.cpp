@@ -199,6 +199,10 @@ namespace WifiPad
             operator Display *() { return m_xdpy; }
         };
 
+		void SimulateMouse(int button,int state,int dx = 0,int dy = 0,int dz = 0)
+		{
+		}
+
         void SimulateKey(int key,int state) {
 			XDisplayHandle display; // xdiplay handles not valid across thread, so create one in the thread
 #if 0
