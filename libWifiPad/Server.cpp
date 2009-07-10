@@ -646,6 +646,7 @@ namespace WifiPad
 					else if(!strncmp(msg,"/bt1",4)) { button = 14; state = 0; }
 					else if(!strncmp(msg,"/be0",4)) { button = 15; state = 0xFFFF; }
 					else if(!strncmp(msg,"/be1",4)) { button = 15; state = 0; }
+					else { msg[0] = 0; continue; }
 					
 					int keysToSimulate[3];
 					ConfigurationKey key;
