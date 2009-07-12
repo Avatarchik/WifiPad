@@ -100,7 +100,7 @@ namespace WifiPad
 		int lineCount = 0;
 		std::stringstream errStr;
 		std::multimap<const std::string,int> imageMap; // maps images to button number for delayed image loading
-		bool tagFound = false;
+		uint32_t gp_version = 0;
 		bool uuidFound = false;
 		bool nameFound = false;
 		
@@ -120,13 +120,16 @@ namespace WifiPad
 			if(!value) continue;
 			value = Trim(value);
 
-			// check for Tag: GP10
-			if(!tagFound) {
-				if(strcmp(key,"Tag") != 0 || strcmp(value,"GP10") != 0) {
-					errStr << "Invalid gamepad format. Must contain Tag: GP10 as first entry.\n";
+			// check for Tag: GP10 or GP11
+			if(!gp_version) {
+				if(strcmp(key,"Tag") == 0) {
+					if(strcmp(value,"GP10") == 0) gp_version = 0x01000000;
+					else if(strcmp(value,"GP11") == 0) gp_version = 0x01010000;
+				}
+				if(!gp_version) {
+					errStr << "Invalid gamepad format. Must contain Tag: GP10/GP11 as first entry.\n";
 					throw std::runtime_error(errStr.str());
 				}
-				tagFound = true;
 				continue;
 			}
 
@@ -147,7 +150,7 @@ namespace WifiPad
 				int numButtons = strtol(value,NULL,0);
 				if(numButtons > 256) numButtons = 256;
 				m_buttons.reserve(numButtons);
-			} else if(strcmp(key,"Button") == 0 || strcmp(key,"Trackpad") == 0) {
+			} else if(strcmp(key,"Button") == 0 || (gp_version >= 0x01010000 && strcmp(key,"Trackpad") == 0)) {
 				char *rect = strtok(value,";");
 				char *imageInfo = strtok(NULL,";");
 				char *defaultKey = strtok(NULL,";");
@@ -300,6 +303,9 @@ namespace WifiPad
 				}
 
 				AddButton(button);
+			} else {
+				errStr << "Unrecognized key '" << key << "'.\n";
+				throw std::runtime_error(errStr.str());
 			}
 		}
 
