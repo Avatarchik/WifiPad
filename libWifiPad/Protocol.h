@@ -25,6 +25,10 @@
 #include "Uuid.h"
 #include "Socket.h"
 
+#if _MSC_VER 
+#pragma pack(1)
+#endif
+
 namespace WifiPad
 {
 #if _WIN32
@@ -52,7 +56,10 @@ namespace WifiPad
 			ERROR_PACKET,
 			
 			// v1.1
-			TRACKPAD_EVENT
+			TRACKPAD_EVENT,
+			
+			// v1.x
+			ACCELEROMETER_EVENT
 		};
 	}
 	
@@ -77,6 +84,16 @@ namespace WifiPad
 		int32_t dx; // delta x
 		int32_t dy; // delta y
 		int32_t dz; // delta z (wheel mouse)
+	};
+	
+	struct AccelerometerEventPacket
+	{
+		enum { Command = PacketCommand::ACCELEROMETER_EVENT };
+		uint32_t sessionID;
+		uint32_t padding;
+		double x; 
+		double y; 
+		double z; 
 	};
 
 	struct AcquireSessionPacket 
@@ -215,5 +232,9 @@ namespace WifiPad
 		}
 	};
 }
+
+#if _MSC_VER 
+#pragma pack()
+#endif
 
 #endif
