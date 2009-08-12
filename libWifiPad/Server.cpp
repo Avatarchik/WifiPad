@@ -152,6 +152,15 @@ namespace WifiPad
 		
 		QuartzRef<CGEventRef> event = CGEventCreateMouseEvent(source,type,npt,button);
 		if(event) CGEventPost(kCGSessionEventTap,event);
+		
+		if(dz) {
+			QuartzRef<CGEventRef> event = CGEventCreate(source);
+			if(event) {
+				CGEventSetType(event,kCGEventScrollWheel);
+				CGEventSetIntegerValueField(event,kCGScrollWheelEventDeltaAxis1,dz);
+				CGEventPost(kCGSessionEventTap,event);
+			}
+		}
 	}
 	
 	void SimulateKey(int key,int state) {
@@ -496,8 +505,8 @@ namespace WifiPad
 							case KeySyms::MOUSEDOWN: SimulateMouse(-1,0,0,(int)mouseAccel); break;
 							case KeySyms::MOUSELEFT: SimulateMouse(-1,0,-(int)mouseAccel,0); break;
 							case KeySyms::MOUSERIGHT: SimulateMouse(-1,0,(int)mouseAccel,0); break;
-							case KeySyms::WHEELUP: SimulateMouse(-1,0,0,-(int)mouseAccel); break;
-							case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,(int)mouseAccel); break;
+							case KeySyms::WHEELUP: SimulateMouse(-1,0,0,0,(int)mouseAccel); break;
+							case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,0,-(int)mouseAccel); break;
 							default: SimulateKey(*it,(int)mouseAccel); break;
 						}
 					}
@@ -553,7 +562,7 @@ namespace WifiPad
 								int state = ntohl(query.packet.buttonEvent.buttonState);
 								
 								// repeat mouse keys
-								if(keysToSimulate[i] >= KeySyms::MOUSEUP && keysToSimulate[i] <= KeySyms::MOUSERIGHT) {
+								if(keysToSimulate[i] >= KeySyms::MOUSEUP && keysToSimulate[i] <= KeySyms::WHEELDOWN) {
 									mouseAccel = 1.0;
 									if(state) {
 										repeatKeys.push_back(keysToSimulate[i]);
@@ -570,8 +579,8 @@ namespace WifiPad
 									case KeySyms::MOUSEDOWN: SimulateMouse(-1,0,0,state); break;
 									case KeySyms::MOUSELEFT: SimulateMouse(-1,0,-state,0); break;
 									case KeySyms::MOUSERIGHT: SimulateMouse(-1,0,state,0); break;
-									case KeySyms::WHEELUP: SimulateMouse(-1,0,0,-state); break;
-									case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,state); break;
+									case KeySyms::WHEELUP: SimulateMouse(-1,0,0,0,state); break;
+									case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,0,-state); break;
 									default: SimulateKey(keysToSimulate[i],state); break;
 								}
 							}
