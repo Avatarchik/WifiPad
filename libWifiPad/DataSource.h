@@ -23,7 +23,7 @@
 #include <string>
 #if __APPLE__
 #include <TargetConditionals.h>
-#ifdef TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 #include <CoreGraphics/CoreGraphics.h>
 #else
 #include <ApplicationServices/ApplicationServices.h>

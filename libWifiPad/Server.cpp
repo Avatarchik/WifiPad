@@ -18,7 +18,7 @@
 */
 #if __APPLE__
 #include <TargetConditionals.h>
-#ifdef TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 #include <CoreGraphics/CoreGraphics.h>
 #else
 #include <ApplicationServices/ApplicationServices.h>
@@ -110,7 +110,7 @@ namespace WifiPad
 	}
 #endif
 #if __APPLE__ 
-#if !defined(TARGET_OS_IPHONE) && !defined(TARGET_IPHONE_SIMULATOR)
+#if !TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
 	void SimulateMouse(int button,int state,int dx = 0,int dy = 0,int dz = 0)
 	{
 		QuartzRef<CGEventSourceRef> source = CGEventSourceCreate(kCGEventSourceStatePrivate); // Tiger fix
