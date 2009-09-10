@@ -135,7 +135,14 @@ namespace WifiPad
 		
 		// get mouse pos
 		Point pt;
+#if __LP64__
+		HIPoint hipt;
+		HIGetMousePosition(kHICoordSpaceScreenPixel,NULL,&hipt);
+		pt.h = hipt.x;
+		pt.v = hipt.y;
+#else
 		GetGlobalMouse(&pt);
+#endif
 		
 		// convert to cgpoint
 		CGPoint npt;
