@@ -253,10 +253,7 @@ namespace WifiPad
 		OS::CreateDirectory(GetAppDataPath(),0750);
 		OS::CreateDirectory(GetConfigurationsPath(),0750);
 		OS::CreateDirectory(GetGamePadsPath(),0750);
-#if _WIN32
-		FILE *fp = fopen((m_appDataPath + "/Gamepads/DRAG GAMEPADS HERE.txt").c_str(),"w");
-		fclose(fp);
-#endif
+
 		LoadGamePads();
 		
 		try {
@@ -603,9 +600,14 @@ namespace WifiPad
 							int dx = ntohl(query.packet.trackPadEvent.dx);
 							int dy = ntohl(query.packet.trackPadEvent.dy);
 							int dz = ntohl(query.packet.trackPadEvent.dz);
-							if(dx <= -10 || dx >= 10) dx *= (1.0f - (10.0f / abs(dx))) * (m_mouseSpeed / 3.0f);
-							if(dy <= -10 || dy >= 10) dy *= (1.0f - (10.0f / abs(dy))) * (m_mouseSpeed / 3.0f);
-							if(dz <= -10 || dz >= 10) dz *= (1.0f - (10.0f / abs(dz))) * (m_mouseSpeed / 3.0f);
+#if 0
+							if(dx < -10 || dx > 10) dx = dx * (1.0f - (10.0f / abs(dx))) * (m_mouseSpeed );
+							if(dy < -10 || dy > 10) dy = dy * (1.0f - (10.0f / abs(dy))) * (m_mouseSpeed);
+							if(dz < -10 || dz > 10) dz = dz * (1.0f - (10.0f / abs(dz))) * (m_mouseSpeed );
+#endif
+							if(dx < -10 || dx > 10) dx *= m_mouseSpeed / 3.0;
+							if(dy < -10 || dy > 10) dy *= m_mouseSpeed / 3.0;
+							if(dz < -10 || dz > 10) dz *= m_mouseSpeed / 3.0;
 							SimulateMouse(-1,0,dx,dy,dz);
 						} catch(const std::runtime_error&) {
 						}
