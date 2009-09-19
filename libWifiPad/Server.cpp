@@ -585,6 +585,7 @@ namespace WifiPad
 									case KeySyms::MOUSERIGHT: SimulateMouse(-1,0,state,0); break;
 									case KeySyms::WHEELUP: SimulateMouse(-1,0,0,0,state); break;
 									case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,0,-state); break;
+									case -1: break;
 									default: SimulateKey(keysToSimulate[i],state); break;
 								}
 							}
