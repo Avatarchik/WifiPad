@@ -597,18 +597,32 @@ namespace WifiPad
 						try {
 							// get device given session
 							DevicePtr device = GetDeviceBySessionId(ntohl(query.packet.trackPadEvent.sessionID));
+							
 							int dx = ntohl(query.packet.trackPadEvent.dx);
 							int dy = ntohl(query.packet.trackPadEvent.dy);
 							int dz = ntohl(query.packet.trackPadEvent.dz);
-#if 0
-							if(dx < -10 || dx > 10) dx = dx * (1.0f - (10.0f / abs(dx))) * (m_mouseSpeed );
-							if(dy < -10 || dy > 10) dy = dy * (1.0f - (10.0f / abs(dy))) * (m_mouseSpeed);
-							if(dz < -10 || dz > 10) dz = dz * (1.0f - (10.0f / abs(dz))) * (m_mouseSpeed );
-#endif
-							if(dx < -10 || dx > 10) dx *= m_mouseSpeed / 3.0;
-							if(dy < -10 || dy > 10) dy *= m_mouseSpeed / 3.0;
-							if(dz < -10 || dz > 10) dz *= m_mouseSpeed / 3.0;
+
+							if(dx < -1 || dx > 1) dx = dx * (1.0f - (1.0f / abs(dx))) * m_mouseSpeed;
+							if(dy < -1 || dy > 1) dy = dy * (1.0f - (1.0f / abs(dy))) * m_mouseSpeed;
+							if(dz < -1 || dz > 1) dz = dz * (1.0f - (1.0f / abs(dz))) * m_mouseSpeed;
+
 							SimulateMouse(-1,0,dx,dy,dz);
+						} catch(const std::runtime_error&) {
+						}
+					}
+					break;
+					case PacketCommand::ACCELEROMETER_EVENT:
+					{
+						try {
+							// get device given session
+							DevicePtr device = GetDeviceBySessionId(ntohl(query.packet.accelerometerEvent.sessionID));
+							
+							int ax = ntohl(query.packet.accelerometerEvent.x);
+							int ay = ntohl(query.packet.accelerometerEvent.y);
+							int az = ntohl(query.packet.accelerometerEvent.z);
+							
+							// FIXME: okay, figure out what should we simulate for accelerometer events
+							
 						} catch(const std::runtime_error&) {
 						}
 					}

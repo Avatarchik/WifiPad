@@ -208,6 +208,8 @@ namespace WifiPad
 			
 			// v1.1
 			TrackPadEventPacket trackPadEvent;
+			// v1.x
+			AccelerometerEventPacket accelerometerEvent;
 		} packet;
 
 		bool Read(Socket& socket) {
