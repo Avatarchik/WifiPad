@@ -60,6 +60,8 @@ namespace WifiPad
 		operator uint32_t() { return *(uint32_t *)&m_ip; }
 		IP& operator =(uint32_t addr) { *(uint32_t *)&m_ip = addr; return *this; }
 		const uint8_t& operator[](int n) const { return m_ip[n]; }
+		
+		bool operator ==(const IP& rhs) const { return *(uint32_t *)m_ip == *(uint32_t *)rhs.m_ip; }
 	};
 
 	class Socket

@@ -19,6 +19,9 @@
 #ifndef __Server_h
 #define __Server_h
 
+#if __APPLE__
+#include <dns_sd.h>
+#endif
 #include <string>
 #include <vector>
 #include <list>
@@ -74,6 +77,9 @@ namespace WifiPad
 
 		mutable Mutex m_serverLock, m_gamePadListLock, m_devicesLock, m_configurationLock, m_clientListLock;
 
+#if __APPLE__
+		DNSServiceRef m_dnsServiceRef;
+#endif
 		bool HandleQuery(Socket& socket);
 	public:
 		Server(const std::string& hostname,int port);

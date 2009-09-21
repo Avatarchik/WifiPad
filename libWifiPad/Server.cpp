@@ -18,6 +18,7 @@
 */
 #if __APPLE__
 #include <TargetConditionals.h>
+#include <dns_sd.h>
 #if TARGET_OS_IPHONE
 #include <CoreGraphics/CoreGraphics.h>
 #else
@@ -260,6 +261,11 @@ namespace WifiPad
 			m_clientSocket.Bind(hostname,port);
 			m_clientSocket.Listen(4);
 			m_dataSocket.Bind("0.0.0.0",port);
+			
+#if __APPLE__
+			m_dnsServiceRef = 0;
+			DNSServiceRegister(&m_dnsServiceRef,0,0,NULL,"_wifipad._tcp",NULL,NULL,htons(8989),0,NULL,NULL,NULL);
+#endif
 		} catch(const std::runtime_error&) {
 			throw std::runtime_error("Failed to listen to on port 8989. Please make sure all clients are disconnected and try again in a few minutes.");
 		}
@@ -267,6 +273,7 @@ namespace WifiPad
 
 	Server::~Server()
 	{
+		if(m_dnsServiceRef) DNSServiceRefDeallocate(m_dnsServiceRef);
 		Stop();
 	}
 	
