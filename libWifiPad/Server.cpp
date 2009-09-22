@@ -273,7 +273,9 @@ namespace WifiPad
 
 	Server::~Server()
 	{
+#if __APPLE__
 		if(m_dnsServiceRef) DNSServiceRefDeallocate(m_dnsServiceRef);
+#endif
 		Stop();
 	}
 	
