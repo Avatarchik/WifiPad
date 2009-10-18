@@ -186,7 +186,7 @@ namespace WifiPad
 			case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,state); break;
 			default:
 				{
-					QuartzRef<CGEventRef> event = CGEventCreateKeyboardEvent(NULL,key,state ? true : false);
+					QuartzRef<CGEventRef> event = CGEventCreateKeyboardEvent(source,key,state ? true : false);
 					if(event) {
 						CGEventSetType(event,state ? kCGEventKeyDown : kCGEventKeyUp);
 						CGEventPost(kCGSessionEventTap,event);
