@@ -295,7 +295,7 @@ namespace WifiPad
 				
 				if(defaultKey) {
 					char *key = strtok(defaultKey,",");
-					for(int i = 0; key && i < 2; i++) {
+					for(int i = 0; key && i < 3; i++) {
 						key = Trim(key);
 						button.defaultKey[i] = KeySyms::MapSymbol(key);
 						key = strtok(NULL,",");
