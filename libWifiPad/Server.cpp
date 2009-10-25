@@ -114,7 +114,9 @@ namespace WifiPad
 #if !TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
 	void SimulateMouse(int button,int state,int dx = 0,int dy = 0,int dz = 0)
 	{
-		QuartzRef<CGEventSourceRef> source = CGEventSourceCreate(kCGEventSourceStatePrivate); // Tiger fix
+		//QuartzRef<CGEventSourceRef> source = CGEventSourceCreate(kCGEventSourceStatePrivate); // Tiger fix
+		CFRelease(CGEventCreate(NULL)); // Tiger fix
+
 		CGEventType type;
 		static int btnState = -1;
 		if((dx | dy) == 0) {
@@ -158,11 +160,11 @@ namespace WifiPad
 		if(npt.y < 0) npt.y = 0;
 		else if(npt.y > yres) npt.y = yres - 1;
 		
-		QuartzRef<CGEventRef> event = CGEventCreateMouseEvent(source,type,npt,button);
+		QuartzRef<CGEventRef> event = CGEventCreateMouseEvent(NULL,type,npt,button);
 		if(event) CGEventPost(kCGSessionEventTap,event);
 		
 		if(dz) {
-			QuartzRef<CGEventRef> event = CGEventCreate(source);
+			QuartzRef<CGEventRef> event = CGEventCreate(NULL);
 			if(event) {
 				CGEventSetType(event,kCGEventScrollWheel);
 				CGEventSetIntegerValueField(event,kCGScrollWheelEventDeltaAxis1,dz);
@@ -172,8 +174,9 @@ namespace WifiPad
 	}
 	
 	void SimulateKey(int key,int state) {
-		QuartzRef<CGEventSourceRef> source = CGEventSourceCreate(kCGEventSourceStatePrivate); // Tiger fix
- 
+		//QuartzRef<CGEventSourceRef> source = CGEventSourceCreate(kCGEventSourceStatePrivate); // Tiger fix
+		CFRelease(CGEventCreate(NULL)); // Tiger fix
+
 		switch(key) {
 			case KeySyms::LBUTTON: SimulateMouse(0,state); break;
 			case KeySyms::RBUTTON: SimulateMouse(1,state); break;
@@ -186,7 +189,7 @@ namespace WifiPad
 			case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,state); break;
 			default:
 				{
-					QuartzRef<CGEventRef> event = CGEventCreateKeyboardEvent(source,key,state ? true : false);
+					QuartzRef<CGEventRef> event = CGEventCreateKeyboardEvent(NULL,key,state ? true : false);
 					if(event) {
 						CGEventSetType(event,state ? kCGEventKeyDown : kCGEventKeyUp);
 						CGEventPost(kCGSessionEventTap,event);
