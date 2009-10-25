@@ -21,7 +21,7 @@
 
 #include <string>
 #include <inttypes.h>
-#include <tr1/memory>
+#include <boost/shared_ptr.hpp>
 #include "Uuid.h"
 #include "GamePad.h"
 #include "Mutex.h"
@@ -93,7 +93,7 @@ namespace WifiPad {
 		}
 	};
 	
-	typedef std::tr1::shared_ptr<Device> DevicePtr;
+	typedef boost::shared_ptr<Device> DevicePtr;
 }
 
 #endif

@@ -20,7 +20,7 @@
 #define __Configuration_h
 
 #include <boost/unordered_map.hpp>
-#include <tr1/memory>
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include "Mutex.h"
 #include "Uuid.h"
@@ -109,7 +109,7 @@ namespace WifiPad
 		}
 	};
 	
-	typedef std::tr1::shared_ptr<Configuration> ConfigurationPtr;
+	typedef boost::shared_ptr<Configuration> ConfigurationPtr;
 }
 
 #endif

@@ -21,7 +21,7 @@
 
 #include <string>
 #include <vector>
-#include <tr1/memory>
+#include <boost/shared_ptr.hpp>
 #include "Mutex.h"
 #include "Uuid.h"
 #include "Image.h"
@@ -92,7 +92,7 @@ namespace WifiPad
 		int GetNumButtons() const { ScopedLock lock(m_lock); return (int)m_buttons.size(); }
 	};
 	
-	typedef std::tr1::shared_ptr<GamePad> GamePadPtr;
+	typedef boost::shared_ptr<GamePad> GamePadPtr;
 }
 
 #endif

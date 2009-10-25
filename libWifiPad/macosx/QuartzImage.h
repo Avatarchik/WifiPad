@@ -21,7 +21,7 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
-#include <tr1/memory>
+#include <boost/shared_ptr.hpp>
 
 namespace WifiPad
 {
@@ -47,7 +47,7 @@ namespace WifiPad
 		int GetPitch() const { return CGImageGetBytesPerRow(m_image); }
 	};
 	
-	typedef std::tr1::shared_ptr<Image> ImagePtr;
+	typedef boost::shared_ptr<Image> ImagePtr;
 }
 
 #endif

@@ -20,7 +20,7 @@
 #define __QtImage_h
 
 #include <QtGui/QImage>
-#include <tr1/memory>
+#include <boost/shared_ptr.hpp>
 
 namespace WifiPad
 {
@@ -46,7 +46,7 @@ namespace WifiPad
                 int GetPitch() const { return m_image.bytesPerLine(); }
         };
 
-        typedef std::tr1::shared_ptr<Image> ImagePtr;
+        typedef boost::shared_ptr<Image> ImagePtr;
 }
 
 #endif
