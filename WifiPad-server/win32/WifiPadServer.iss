@@ -1,6 +1,6 @@
 [Setup]
 AppName=WifiPad Server
-AppVerName=WifiPad Server 1.1 RC1
+AppVerName=WifiPad Server 1.1 RC3
 DefaultDirName={pf}\WifiPad Server
 DefaultGroupName=WifiPad Server
 UninstallDisplayIcon={app}\WifiPadServer.exe
