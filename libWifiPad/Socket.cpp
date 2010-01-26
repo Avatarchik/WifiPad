@@ -118,6 +118,7 @@ void Socket::Connect(const std::string& hostname,int port,timeval *tv)
 	myAddress.sin_port = htons(port);
 	
 	if(tv) {
+		int res;
 		int err = connect(m_socket,(sockaddr *)&myAddress, sizeof(myAddress));
 		if(err < 0)
 		{
@@ -131,9 +132,15 @@ void Socket::Connect(const std::string& hostname,int port,timeval *tv)
 					fd_set set;
 					FD_ZERO(&set); 
 					FD_SET(m_socket,&set); 
-					if(select(m_socket + 1,NULL,&set,NULL,tv) <= 0) {
-						throw std::runtime_error("Could not connect to host.\n");
+					res = select(m_socket + 1,NULL,&set,NULL,tv);
+					if(res < 0) {
+						throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
 					}
+					
+					if(res == 0) {
+						throw std::runtime_error("Timeout on connecting to host.\n");
+					}
+					
 					int error;
 #if _WIN32
 					int len;
@@ -141,9 +148,13 @@ void Socket::Connect(const std::string& hostname,int port,timeval *tv)
 					socklen_t len;
 #endif
 					len = sizeof(int);
-					if(getsockopt(m_socket,SOL_SOCKET,SO_ERROR,(char *)&error,&len) < 0 || error) { 
-						throw std::runtime_error("Could not connect to host.\n");
+					if(getsockopt(m_socket,SOL_SOCKET,SO_ERROR,(char *)&error,&len) < 0) { 
+						throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
 					} 
+					
+					if(error) {
+						throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
+					}
 					
 					break;
 				default:

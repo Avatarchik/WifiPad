@@ -618,7 +618,7 @@ namespace WifiPad
 							if(dx < -1 || dx > 1) dx = dx * (1.0f - (1.0f / abs(dx))) * m_mouseSpeed;
 							if(dy < -1 || dy > 1) dy = dy * (1.0f - (1.0f / abs(dy))) * m_mouseSpeed;
 							if(dz < -1 || dz > 1) dz = dz * (1.0f - (1.0f / abs(dz))) * m_mouseSpeed;
-
+							
 							SimulateMouse(-1,0,dx,dy,dz);
 						} catch(const std::runtime_error&) {
 						}
