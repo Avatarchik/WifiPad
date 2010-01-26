@@ -153,18 +153,18 @@ void Socket::Connect(const std::string& hostname,int port,timeval *tv)
 					} 
 					
 					if(error) {
-						throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
+						throw std::runtime_error((std::string)"Could not connect to host: " + strerror(error) + "\n");
 					}
 					
 					break;
 				default:
-					throw std::runtime_error("Could not connect to host.\n");
+					throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
 			}
 		}
 	} else {
 		if(connect(m_socket,(sockaddr *)&myAddress, sizeof(myAddress))<0)
 		{
-			throw std::runtime_error("Could not connect to host.\n");
+			throw std::runtime_error((std::string)"Could not connect to host: " + strerror(errno) + "\n");
 		}
 	}
 }
