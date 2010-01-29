@@ -234,6 +234,32 @@
      <string>Test button presses in this box below</string>
     </property>
    </widget>
+   <widget class="QSlider" name="hsMouseSpeed">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>100</y>
+      <width>101</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>103</y>
+      <width>91</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mouse speed:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionE_xit">
@@ -253,6 +279,21 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>leServerName</tabstop>
+  <tabstop>cbConfiguration</tabstop>
+  <tabstop>bNewConfiguration</tabstop>
+  <tabstop>bDeleteConfiguration</tabstop>
+  <tabstop>bSaveConfiguration</tabstop>
+  <tabstop>cbGamepads</tabstop>
+  <tabstop>bInstallGamepad</tabstop>
+  <tabstop>bDeleteGamepad</tabstop>
+  <tabstop>hsMouseSpeed</tabstop>
+  <tabstop>bShowKeys</tabstop>
+  <tabstop>bShowTapZones</tabstop>
+  <tabstop>gvGamepadView</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -415,6 +456,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>hsMouseSpeed</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SetMouseSpeed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>ServerNameChanged(QString)</slot>
@@ -425,5 +482,6 @@
   <slot>NewConfiguration()</slot>
   <slot>InstallGamepad()</slot>
   <slot>DeleteGamepad()</slot>
+  <slot>SetMouseSpeed(int)</slot>
  </slots>
 </ui>

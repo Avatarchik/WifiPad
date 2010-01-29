@@ -221,6 +221,19 @@ namespace WifiPad
 
 		void SimulateMouse(int button,int state,int dx = 0,int dy = 0,int dz = 0)
 		{
+			XDisplayHandle display;
+
+			if(button >= 0) {
+				switch(button) {
+					case 0: XTestFakeButtonEvent(display,1,state ? 1 : 0,0); break; // left
+					case 1: XTestFakeButtonEvent(display,3,state ? 1 : 0,0); break; // right
+					case 2: XTestFakeButtonEvent(display,2,state ? 1 : 0,0); break; // middle
+				}
+
+
+			}
+
+			XTestFakeRelativeMotionEvent(display,dx,dy,0);
 		}
 
         void SimulateKey(int key,int state) {
@@ -501,7 +514,7 @@ namespace WifiPad
 		IP ip;
 		std::list<int> repeatKeys;
 		float mouseAccel = 0;
-		m_mouseSpeed = 10;
+
 		while(!m_terminateFlag) {
 			if(!repeatKeys.empty()) {
 				mouseAccel *= 1.05f;

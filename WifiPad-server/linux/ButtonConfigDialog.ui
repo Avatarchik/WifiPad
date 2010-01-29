@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
-    <height>160</height>
+    <width>475</width>
+    <height>111</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>375</width>
-    <height>160</height>
+    <width>475</width>
+    <height>111</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>375</width>
-    <height>160</height>
+    <width>475</width>
+    <height>111</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,13 +31,13 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>351</width>
-     <height>141</height>
+     <width>451</width>
+     <height>93</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -54,37 +54,58 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLineEdit" name="leKey1">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QComboBox" name="cbKey1">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
+        <property name="maximumSize">
+         <size>
+          <width>12</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>+</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="leKey2">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QComboBox" name="cbKey2">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_3">
+        <property name="maximumSize">
+         <size>
+          <width>12</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>+</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="leKey3">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QComboBox" name="cbKey3">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -92,6 +113,22 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="bAccept">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Accept</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -130,7 +167,7 @@
          <bool>false</bool>
         </property>
         <property name="default">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -140,10 +177,6 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>leKey1</tabstop>
-  <tabstop>leKey2</tabstop>
-  <tabstop>leKey3</tabstop>
-  <tabstop>bClose</tabstop>
   <tabstop>bDefault</tabstop>
  </tabstops>
  <resources/>
@@ -155,8 +188,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>127</y>
+     <x>458</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>21</x>
@@ -171,8 +204,8 @@
    <slot>Default()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>127</y>
+     <x>367</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>130</x>
@@ -180,8 +213,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>bAccept</sender>
+   <signal>clicked()</signal>
+   <receiver>ButtonConfigDialog</receiver>
+   <slot>Accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>41</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>Default()</slot>
+  <slot>Accept()</slot>
  </slots>
 </ui>

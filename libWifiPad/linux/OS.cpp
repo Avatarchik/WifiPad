@@ -42,7 +42,7 @@ namespace WifiPad
 
 		std::string GetResourcesPath()
 		{
-			return "/usr/share/WifiPadServer";
+			return "/usr/share/wifipad-server";
 		}
 
 		std::string GetAppDataPath()

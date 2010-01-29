@@ -26,6 +26,7 @@ public:
 
 public slots:
     void Default();
+	void Accept();
 };
 
 #endif // BUTTONCONFIGDIALOG_H

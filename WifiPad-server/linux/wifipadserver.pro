@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2009-06-14T07:48:13
 # -------------------------------------------------
-TARGET = WifiPadServer
+TARGET = wifipad-server 
 TEMPLATE = app
 SOURCES += main.cpp \
     MainWindow.cpp \
@@ -34,7 +34,6 @@ HEADERS += MainWindow.h \
     ../../libWifiPad/Mutex.h \
     ../../libWifiPad/LimitReader.h \
     ../../libWifiPad/KeySyms.h \
-    ../../libWifiPad/Image.h \
     ../../libWifiPad/GamePad.h \
     ../../libWifiPad/FileDataSource.h \
     ../../libWifiPad/FileDataSink.h \
@@ -45,6 +44,7 @@ HEADERS += MainWindow.h \
     ../../libWifiPad/Configuration.h \
     ../../libWifiPad/BufferedInputReader.h \
     ../../libWifiPad/Ar.h \
+    ../../libWifiPad/linux/Image.h \
     ../../libWifiPad/linux/QtImage.h \
     GamePadView.h \
     ButtonConfigDialog.h \
@@ -54,3 +54,9 @@ FORMS += MainWindow.ui \
     NewConfigurationDialog.ui
 INCLUDEPATH = .;../../libs;../../libWifiPad;../../libWifiPad/linux
 LIBS = -lXtst -luuid
+binaries.path = $$(DESTDIR)/usr/bin
+binaries.files = wifipad-server
+gamepads.path = $$(DESTDIR)/usr/share/wifipad-server
+gamepads.files = ../../Default.gamepad
+INSTALLS += binaries gamepads
+

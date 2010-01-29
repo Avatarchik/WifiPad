@@ -70,6 +70,14 @@ namespace WifiPad
 		else if(sym == "BRACKETLEFT") return XK_bracketleft;
 		else if(sym == "BRACKETRIGHT") return XK_bracketright;
 
+		else if(sym == "LBUTTON") return KeySyms::LBUTTON;
+		else if(sym == "MBUTTON") return KeySyms::MBUTTON;
+		else if(sym == "RBUTTON") return KeySyms::RBUTTON;
+		else if(sym == "MOUSEUP") return KeySyms::MOUSEUP;
+		else if(sym == "MOUSEDOWN") return KeySyms::MOUSEDOWN;
+		else if(sym == "MOUSELEFT") return KeySyms::MOUSELEFT;
+		else if(sym == "MOUSERIGHT") return KeySyms::MOUSERIGHT;
+
         int key = XStringToKeysym(NormalizeCase(sym).c_str());
 		if(key == NoSymbol) {
 			if(sym.length() == 0) return -1;
@@ -104,6 +112,13 @@ namespace WifiPad
 			case XK_KP_Subtract: return "NUMPAD_MINUS";
 			case XK_KP_Multiply: return "NUMPAD_MULTIPLY";
 			case XK_KP_Divide: return "NUMPAD_DIVIDE";
+			case KeySyms::LBUTTON: return "LBUTTON";
+			case KeySyms::RBUTTON: return "RBUTTON";
+			case KeySyms::MBUTTON: return "MBUTTON";
+			case KeySyms::MOUSEUP: return "MOUSEUP";
+			case KeySyms::MOUSEDOWN: return "MOUSEDOWN";
+			case KeySyms::MOUSELEFT: return "MOUSELEFT";
+			case KeySyms::MOUSERIGHT: return "MOUSERIGHT";
 		}
 
         const char *sym = XKeysymToString(key);

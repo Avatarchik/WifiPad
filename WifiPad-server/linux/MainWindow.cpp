@@ -14,6 +14,9 @@ MainWindow::MainWindow(Server& server,QWidget *parent)
 {
     ui->setupUi(this);
     ui->gvGamepadView->SetMainWindow(this);
+	ui->hsMouseSpeed->setRange(1,20);
+	m_server.SetMouseSpeed(5);
+	ui->hsMouseSpeed->setValue(5);
     ReloadConfigurationList();
     ReloadGamepadList();
 }
@@ -205,4 +208,9 @@ void MainWindow::DeleteGamepad()
     } catch(const std::runtime_error& e) {
         QMessageBox::critical(this,"Error deleting gamepad",e.what());
     }
+}
+
+void MainWindow::SetMouseSpeed(int speed)
+{
+	m_server.SetMouseSpeed(speed);
 }

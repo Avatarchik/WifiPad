@@ -38,6 +38,7 @@ public slots:
     void SaveConfiguration();
     void InstallGamepad();
     void DeleteGamepad();
+	void SetMouseSpeed(int speed);
 };
 
 #endif // MAINWINDOW_H
