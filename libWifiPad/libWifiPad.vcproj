@@ -200,6 +200,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\strsep.c"
+				>
+			</File>
+			<File
 				RelativePath=".\win32\Win32Image.cpp"
 				>
 			</File>

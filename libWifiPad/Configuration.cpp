@@ -27,7 +27,7 @@
 #include "Configuration.h"
 
 #if _WIN32
-extern char *strsep (char **stringp, const char *delim);
+extern "C" char *strsep (char **stringp, const char *delim);
 #endif
 
 namespace WifiPad
