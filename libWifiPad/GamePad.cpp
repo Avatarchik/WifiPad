@@ -34,6 +34,10 @@
 #include "KeySyms.h"
 #include "GamePad.h"
 
+#if _WIN32
+extern char *strsep (char **stringp, const char *delim);
+#endif
+
 namespace WifiPad
 {
 	// trims a trim, returns pointer into the string from the left trimmed portion
@@ -114,9 +118,10 @@ namespace WifiPad
 			remainingBytes -= readBytes;
 
 			// split by :
-			char *key = strtok(line,":");
+			char *linep = line;
+			char *key = strsep(&linep,":");
 			if(!key) continue;
-			char *value = strtok(NULL,"");
+			char *value = strsep(&linep,"");
 			if(!value) continue;
 			value = Trim(value);
 
@@ -151,9 +156,10 @@ namespace WifiPad
 				if(numButtons > 256) numButtons = 256;
 				m_buttons.reserve(numButtons);
 			} else if(strcmp(key,"Button") == 0 || (gp_version >= 0x01010000 && strcmp(key,"Trackpad") == 0)) {
-				char *rect = strtok(value,";");
-				char *imageInfo = strtok(NULL,";");
-				char *defaultKey = strtok(NULL,";");
+				linep = value;
+				char *rect = strsep(&linep,";");
+				char *imageInfo = strsep(&linep,";");
+				char *defaultKey = strsep(&linep,";");
 
 				if(!rect) {
 					errStr << "Invalid format for Button. Expecting ';'.\n";
@@ -166,7 +172,8 @@ namespace WifiPad
 				if(strcmp(key,"Trackpad") == 0) button.isTrackPad = true;
 
 				// tokenize the rectangles
-				char *coordinate = strtok(rect,",");
+				linep = rect;
+				char *coordinate = strsep(&linep,",");
 				if(!coordinate) {
 					errStr << "Expecting 4 rectangle coordinates.\n";
 					throw std::runtime_error(errStr.str());
@@ -178,7 +185,7 @@ namespace WifiPad
 				}
 				button.x = strtol(coordinate,NULL,0);
 
-				coordinate = strtok(NULL,",");
+				coordinate = strsep(&linep,",");
 				if(!coordinate) {
 					errStr << "Expecting 4 rectangle coordinates.\n";
 					throw std::runtime_error(errStr.str());
@@ -190,7 +197,7 @@ namespace WifiPad
 				}
 				button.y = strtol(coordinate,NULL,0);
 				
-				coordinate = strtok(NULL,",");
+				coordinate = strsep(&linep,",");
 				if(!coordinate) {
 					errStr << "Expecting 4 rectangle coordinates.\n";
 					throw std::runtime_error(errStr.str());
@@ -202,7 +209,7 @@ namespace WifiPad
 				}
 				button.width = strtol(coordinate,NULL,0);
 
-				coordinate = strtok(NULL,",");
+				coordinate = strsep(&linep,",");
 				if(!coordinate) {
 					errStr << "Expecting 4 rectangle coordinates.\n";
 					throw std::runtime_error(errStr.str());
@@ -256,12 +263,13 @@ namespace WifiPad
 				if(imageInfo) {
 					imageInfo = Trim(imageInfo);
 					if(*imageInfo) {
-						char *imageFilename = strtok(imageInfo,",");
+						linep = imageInfo;
+						char *imageFilename = strsep(&linep,",");
 						if(!imageFilename) continue;
 						imageFilename = Trim(imageFilename);
 						imageMap.insert(std::pair<const std::string,int>(imageFilename,GetNumButtons()));
 
-						char *imageX = strtok(NULL,",");
+						char *imageX = strsep(&linep,",");
 						if(!imageX) button.imageX = 0;
 						else {
 							imageX = Trim(imageX);
@@ -276,7 +284,7 @@ namespace WifiPad
 							}
 						}
 
-						char *imageY = strtok(NULL,",");
+						char *imageY = strsep(&linep,",");
 						if(!imageY) button.imageY = 0;
 						else {
 							imageY = Trim(imageY);
@@ -294,11 +302,12 @@ namespace WifiPad
 				}
 				
 				if(defaultKey) {
-					char *key = strtok(defaultKey,",");
+					linep = defaultKey;
+					char *key = strsep(&linep,",");
 					for(int i = 0; key && i < 3; i++) {
 						key = Trim(key);
 						button.defaultKey[i] = KeySyms::MapSymbol(key);
-						key = strtok(NULL,",");
+						key = strsep(&linep,",");
 					}
 				}
 

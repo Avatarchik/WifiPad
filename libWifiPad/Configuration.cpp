@@ -26,6 +26,9 @@
 #include "BufferedInputReader.h"
 #include "Configuration.h"
 
+#if _WIN32
+extern char *strsep (char **stringp, const char *delim);
+#endif
 
 namespace WifiPad
 {
@@ -41,12 +44,13 @@ namespace WifiPad
  
 		m_name = name;
 
+		char *linep;
 		// format is relly easy..
 		// gamepad-uuid:buttonNo:buttonKeys1,buttonKeys2,buttonKeys3
 		while(reader.ReadLine((uint8_t *)line,4096) != -1) {
-			const char *gamepadUUID = strtok(line,":");
-			const char *buttonNo = strtok(NULL,":");
-			char *buttonKeys = strtok(NULL,":");
+			const char *gamepadUUID = strsep(&linep,":");
+			const char *buttonNo = strsep(&linep,":");
+			char *buttonKeys = strsep(&linep,":");
 
 			if(!gamepadUUID || !buttonNo || !buttonKeys)
 				continue;
@@ -58,11 +62,13 @@ namespace WifiPad
 				continue;
 			}
 			key.buttonNo = strtol(buttonNo,NULL,10);
-			char *button = strtok(buttonKeys,",");
+			
+			linep = buttonKeys;
+			char *button = strsep(&linep,",");
 			value.key[0] = button ? strtol(button,NULL,0) : -1;
-			button = strtok(NULL,",");
+			button = strsep(&linep,",");
 			value.key[1] = button ? strtol(button,NULL,0) : -1;
-			button = strtok(NULL,",");
+			button = strsep(&linep,",");
 			value.key[2] = button ? strtol(button,NULL,0) : -1;
 
 			SetValue(key,value);
