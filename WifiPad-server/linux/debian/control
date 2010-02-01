@@ -1,0 +1,11 @@
+Source: wifipad-server
+Section: utils 
+Priority: extra
+Maintainer: Sound <sound@wifipad.com>
+Build-Depends: debhelper (>= 5), uuid-dev, libqt4-dev, libxtst-dev
+Standards-Version: 3.7.2
+
+Package: wifipad-server
+Architecture: any
+Depends: uuid-runtime, libqt4-gui, libxtst6
+Description: Server application for WifiPad
