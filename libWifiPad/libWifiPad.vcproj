@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\libs\wtl;..\libs\atl;..\libs\lpng1235;..\libs\zlib123;..\libs;..\libs\boost;..\libs\boost\tr1;.;win32"
+				AdditionalIncludeDirectories="..\libs\wtl;..\libs\atl;..\libs\libpng;..\libs\zlib123;..\libs;..\libs\boost;..\libs\boost\tr1;.;win32"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -103,7 +103,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\libs\wtl;..\libs\atl;..\libs\lpng1235;..\libs\zlib123;..\libs;..\libs\boost;..\libs\boost\tr1;.;win32"
+				AdditionalIncludeDirectories="..\libs\wtl;..\libs\atl;..\libs\libpng;..\libs\zlib123;..\libs;..\libs\boost;..\libs\boost\tr1;.;win32"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"

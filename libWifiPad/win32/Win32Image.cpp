@@ -100,7 +100,7 @@ namespace WifiPad
 		unsigned char header[8];
 		int is_png;
 		png_bytep row_pointer;
-		unsigned long width, height;
+		png_uint_32 width, height;
 		int bit_depth, color_type, interlace_type, compression_type, filter_method;
 		unsigned int  channels;
 		double gamma, screen_gamma;
