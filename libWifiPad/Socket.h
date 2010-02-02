@@ -72,7 +72,7 @@ namespace WifiPad
 		enum Protocol { TCP, UDP };
 
 		// Creates a new socket baed on protocol
-		explicit Socket(Socket::Protocol protocol = Socket::TCP);
+		explicit Socket();
 
 		// Create socket from existing socket
 		explicit Socket(int socket);
@@ -80,13 +80,15 @@ namespace WifiPad
 		// close socket
 		~Socket();
 		
+		void CreateSocket(Socket::Protocol protocol = Socket::TCP);
+	
 		void SetNonBlocking(bool nonblocking);
 
-		void Connect(const std::string& hostname,int port,timeval *tv = NULL);
+		void Connect(const std::string& hostname,int port,Socket::Protocol protocol = Socket::TCP,timeval *tv = NULL);
 		void Close();
-		void Bind(const std::string& hostname,int port);
+		void Bind(const std::string& hostname,int port,Socket::Protocol protocol = Socket::TCP);
 		void Listen(int backlog);
-		Socket Accept();
+		void Accept(Socket *outSocket);
 
 		// Return -1, on end-of-file.
 		int Read(void *buffer,int size);

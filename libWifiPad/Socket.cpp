@@ -59,28 +59,8 @@ static SocketInit socketinit;
 
 using namespace WifiPad;
 
-Socket::Socket(Protocol protocol)
+Socket::Socket() : m_socket(-1)
 {	
-	this->m_socket = socket(AF_INET, protocol ==  Socket::TCP ? SOCK_STREAM : SOCK_DGRAM, 0);
-	if(this->m_socket<0)
-	{
-		throw std::runtime_error("Unable to create socket.");
-	}
-#if _WIN32
-	char option = '1';
-#else
-	int option = 1;
-#if !linux
-	setsockopt(m_socket,SOL_SOCKET,SO_NOSIGPIPE,&option,sizeof(option));
-
-	timeval tv;
-	tv.tv_sec = 10;
-	tv.tv_usec = 0;
-	setsockopt(m_socket,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
-	setsockopt(m_socket,SOL_SOCKET,SO_SNDTIMEO,&tv,sizeof(tv));
-#endif
-#endif
-	setsockopt(m_socket,SOL_SOCKET,SO_BROADCAST,&option,sizeof(option));
 }
 
 Socket::Socket(int sock) : m_socket(sock)
@@ -93,6 +73,30 @@ Socket::~Socket()
 	Close();
 }
 
+void Socket::CreateSocket(Socket::Protocol protocol)
+{
+	this->m_socket = socket(AF_INET, protocol ==  Socket::TCP ? SOCK_STREAM : SOCK_DGRAM, 0);
+	if(this->m_socket<0)
+	{
+		throw std::runtime_error("Unable to create socket.");
+	}
+#if _WIN32
+	char option = '1';
+#else
+	int option = 1;
+#if !linux
+	setsockopt(m_socket,SOL_SOCKET,SO_NOSIGPIPE,&option,sizeof(option));
+	
+	timeval tv;
+	tv.tv_sec = 10;
+	tv.tv_usec = 0;
+	setsockopt(m_socket,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
+	setsockopt(m_socket,SOL_SOCKET,SO_SNDTIMEO,&tv,sizeof(tv));
+#endif
+#endif
+	setsockopt(m_socket,SOL_SOCKET,SO_BROADCAST,&option,sizeof(option));
+}
+
 void Socket::SetNonBlocking(bool nonblocking)
 {
 	unsigned long nonblockingMode = nonblocking ? 1 : 0;
@@ -103,8 +107,11 @@ void Socket::SetNonBlocking(bool nonblocking)
 #endif
 }
 
-void Socket::Connect(const std::string& hostname,int port,timeval *tv)
+void Socket::Connect(const std::string& hostname,int port,Socket::Protocol protocol,timeval *tv)
 {
+	Close();
+	CreateSocket(protocol);
+	
 	hostent *host;
 	sockaddr_in myAddress;
 	host = gethostbyname(hostname.c_str());
@@ -182,8 +189,11 @@ void Socket::Close()
 	}
 }
 
-void Socket::Bind(const std::string& hostname,int port)
+void Socket::Bind(const std::string& hostname,int port,Socket::Protocol protocol)
 {
+	Close();
+	CreateSocket(protocol);
+	
 	hostent *host;
 	sockaddr_in myAddress;
 	host = gethostbyname(hostname.c_str());
@@ -219,13 +229,16 @@ void Socket::Listen(int backlog)
 	
 }
 
-Socket Socket::Accept()
+void Socket::Accept(Socket *outSocket)
 {
 	int acceptSocket = accept(this->m_socket, NULL, NULL);
 	if(acceptSocket < 0) {
 		throw std::runtime_error("Accept() failed.");
 	}
-	return Socket(acceptSocket);
+	if(outSocket) {
+		outSocket->Close();
+		outSocket->m_socket = acceptSocket;
+	}
 }
 
 int Socket::Read(void *buffer,int size)

@@ -261,7 +261,7 @@ namespace WifiPad
 #endif
 	
 	Server::Server(const std::string& hostname,int port) : 
-		m_serverName(""), m_mouseSpeed(5), m_clientSocket(Socket::TCP), m_dataSocket(Socket::UDP), m_terminateFlag(false)
+		m_serverName(""), m_mouseSpeed(5), m_terminateFlag(false)
 	{
 		m_exePath = OS::GetResourcesPath();
 		m_appDataPath = OS::GetAppDataPath();
@@ -276,7 +276,7 @@ namespace WifiPad
 		try {
 			m_clientSocket.Bind(hostname,port);
 			m_clientSocket.Listen(4);
-			m_dataSocket.Bind("0.0.0.0",port);
+			m_dataSocket.Bind("0.0.0.0",port,Socket::UDP);
 			
 #if __APPLE__
 			m_dnsServiceRef = 0;
@@ -743,7 +743,8 @@ namespace WifiPad
 	int Server::ListenerThread(void *data)
 	{
 		try {
-			Socket socket(m_clientSocket.Accept()); // accept next socket
+			Socket socket; // accept next socket
+			m_clientSocket.Accept(&socket);
 			
 			std::list<Socket *>::iterator curSocket; // insert it to client list
 			{ 
