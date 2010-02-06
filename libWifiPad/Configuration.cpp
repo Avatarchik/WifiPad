@@ -48,6 +48,7 @@ namespace WifiPad
 		// format is relly easy..
 		// gamepad-uuid:buttonNo:buttonKeys1,buttonKeys2,buttonKeys3
 		while(reader.ReadLine((uint8_t *)line,4096) != -1) {
+			linep = line;
 			const char *gamepadUUID = strsep(&linep,":");
 			const char *buttonNo = strsep(&linep,":");
 			char *buttonKeys = strsep(&linep,":");
@@ -63,12 +64,12 @@ namespace WifiPad
 			}
 			key.buttonNo = strtol(buttonNo,NULL,10);
 			
-			linep = buttonKeys;
-			char *button = strsep(&linep,",");
+			char *buttonLine = buttonKeys;
+			char *button = strsep(&buttonLine,",");
 			value.key[0] = button ? strtol(button,NULL,0) : -1;
-			button = strsep(&linep,",");
+			button = strsep(&buttonLine,",");
 			value.key[1] = button ? strtol(button,NULL,0) : -1;
-			button = strsep(&linep,",");
+			button = strsep(&buttonLine,",");
 			value.key[2] = button ? strtol(button,NULL,0) : -1;
 
 			SetValue(key,value);
