@@ -1,3 +1,9 @@
+wifipad-server (1.1.2) unstable; urgency=low
+
+  * Dialog button config fix for linux.
+
+ -- unknown <sound@wifipad.com>  Fri, 5 Feb 2010 21:35:42 -0800
+
 wifipad-server (1.1.1) unstable; urgency=low
 
   * Fix configuration saving bug

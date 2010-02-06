@@ -8,7 +8,7 @@ using namespace WifiPad;
 ButtonConfigDialog::ButtonConfigDialog() : ui(new Ui::ButtonConfigDialog()), m_count(0)
 {
     ui->setupUi(this);
-	QComboBox *c[] = { ui->cbKey1, ui->cbKey2, ui->cbKey3 };
+	QComboBox *c[] = { ui->cbKey1, ui->cbKey2, ui->cbKey3, NULL };
 	for(int i = 0; c[i]; i++) {
 		c[i]->addItem("");
 		c[i]->addItem("MOUSEUP");
