@@ -53,6 +53,9 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR cmdLine,int
 
 		server.Start();
 
+		// show main interface on startup
+		mainWindow.SendMessage(WM_SYSTRAY,0,MAKELPARAM(WM_LBUTTONDOWN,0));
+		
 		while(GetMessage(&msg,NULL,0,0) > 0) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);

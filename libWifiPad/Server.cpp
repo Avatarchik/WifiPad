@@ -101,7 +101,7 @@ namespace WifiPad
 			case VK_DELETE:
 			case VK_PRIOR:
 			case VK_NEXT:
-			case VK_ESCAPE:
+			case VK_LWIN:
 				input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
 				break;
 		}
