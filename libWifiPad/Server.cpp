@@ -189,11 +189,15 @@ namespace WifiPad
 			case KeySyms::WHEELDOWN: SimulateMouse(-1,0,0,state); break;
 			default:
 				{
+					QuartzRef<AXUIElementRef> application = AXUIElementCreateSystemWide();
+					AXUIElementPostKeyboardEvent(application,0,key,state ? true : false);
+					/*
 					QuartzRef<CGEventRef> event = CGEventCreateKeyboardEvent(NULL,key,state ? true : false);
 					if(event) {
 						CGEventSetType(event,state ? kCGEventKeyDown : kCGEventKeyUp);
-						CGEventPost(kCGSessionEventTap,event);
+						CGEventPost(kCGAnnotatedSessionEventTap,event);
 					}
+					 */
 					break;
 				}
 		}
